@@ -1,5 +1,4 @@
 import Item from "../models/item.js";
-import { items } from "../collections/items.js";
 
 const PlayerView = Marionette.View.extend({
     tagName: 'audio',
@@ -21,8 +20,8 @@ const PlayerView = Marionette.View.extend({
         'item:play': 'doPlay',
         'item:pause': 'doPause',
     },
-    doPlay(itemId) {
-        this.model = items.findWhere({ "id": itemId });
+    doPlay(model) {
+        this.model = model;
         this.play();
     },
     doPause(itemId) {
