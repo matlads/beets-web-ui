@@ -1,0 +1,17 @@
+body {
+  padding-top: 70px;
+  padding-bottom: 70px;
+  overflow-y: hidden;
+}
+
+#left-column,
+#center-column,
+#right-column {
+  /* height: 100vh; */
+  height: calc(100vh - 70px - 70px);
+  overflow-y: auto;
+}
+
+.lyrics {
+  white-space: pre;
+}
