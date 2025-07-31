@@ -1,16 +1,14 @@
 import ProfileView from "./profile-view.js";
 import ProfileModel from "../models/profile.js";
+import SearchView from "./search-view.js";
 
 const HeaderView = Marionette.View.extend({
   template: _.template(`
 		<div>
 				<a class="navbar-brand" href="#">Beets</a>
 		</div>
-		<div>
-			<div class="mb-3">
-				<input type="search" class="form-control" id="searchInputControl" />
-			</div>
-		</div>
+    <div>
+    </div>
 		<div id="profile">Profile</div>`),
   className: "container text-center",
 
@@ -20,7 +18,7 @@ const HeaderView = Marionette.View.extend({
 
   onRender() {
     const profile = new ProfileModel({
-      userName: "Martin Atukunda",
+      name: this.options.user.name,
     });
     const profileView = new ProfileView({ model: profile });
     this.showChildView("profileRegion", profileView);

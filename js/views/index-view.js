@@ -10,7 +10,7 @@ const IndexView = Marionette.View.extend({
 	`),
 
   initialize(options) {
-    this.headerView = new HeaderView();
+    this.headerView = new HeaderView(options);
     this.mainView = new MainView(options);
     this.footerView = new FooterView(options);
   },
