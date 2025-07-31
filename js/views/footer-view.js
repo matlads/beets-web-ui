@@ -3,10 +3,10 @@ import CurrentlyPlayingView from "./currently-playing-view.js";
 
 const FooterView = Marionette.View.extend({
 	template: _.template(`
-		<div id="currently-playing" class="col-3"></div>
-		<div id="player" class="col-6 mx-auto"></div>
-		<div class="col-3">Right</div>`),
-	className: "container",
+		<div id="currently-playing"></div>
+		<div id="player" class="mx-auto"></div>
+		<div>Right</div>`),
+	className: "container-fluid",
 	regions: {
 		player: '#player',
 		currentlyPlaying: '#currently-playing'

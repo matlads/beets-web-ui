@@ -2,9 +2,14 @@ import Item from "../models/item.js";
 
 const CurrentlyPlayingView = Marionette.View.extend({
     template: _.template(`
-        <p class="fs-5"><%= title %></p>
-        <p class="fs-6"><%= artist %></p>
+        <div class="card-body">
+            <p class="card-text">
+                <small><%= title %></small>
+                <small class="text-muted"><%= artist %></small>
+            </p>
+        </div>
     `),
+    className: 'card',
     initialize() {
         this.beetsChannel = Backbone.Radio.channel('beets');
         this.bindEvents(this.beetsChannel, this.beetsEvents);
