@@ -1,18 +1,19 @@
 import PlayerView from "./player-view.js";
+import CurrentlyPlayingView from "./currently-playing-view.js";
 
 const FooterView = Marionette.View.extend({
 	template: _.template(`
-		<div>Left</div>
-		<div id="player">
-
-		</div>
-		<div>Right</div>`),
-	className: "container text-center",
+		<div id="currently-playing" class="col-3"></div>
+		<div id="player" class="col-6 mx-auto"></div>
+		<div class="col-3">Right</div>`),
+	className: "container",
 	regions: {
-		player: '#player'
+		player: '#player',
+		currentlyPlaying: '#currently-playing'
 	},
 	onRender() {
 		this.showChildView('player', new PlayerView(this.options));
+		this.showChildView('currentlyPlaying', new CurrentlyPlayingView());
 	}
 });
 export default FooterView;
