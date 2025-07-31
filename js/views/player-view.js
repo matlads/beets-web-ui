@@ -19,10 +19,14 @@ const PlayerView = Marionette.View.extend({
     },
     beetsEvents: {
         'item:play': 'doPlay',
+        'item:pause': 'doPause',
     },
     doPlay(itemId) {
         this.model = items.findWhere({ "id": itemId });
         this.play();
+    },
+    doPause(itemId) {
+        this.el.pause();
     },
     play() {
         const itemId = this.model.get('id');

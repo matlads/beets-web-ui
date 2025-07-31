@@ -3,6 +3,9 @@ import Item from "../models/item.js";
 const beetsChannel = Backbone.Radio.channel('beets');
 
 const ItemView = Marionette.View.extend({
+	options: {
+		playOrPause: 'bi-play',
+	},
 	model: Item,
 	className: "card",
 	template: _.template(`
@@ -28,7 +31,7 @@ const ItemView = Marionette.View.extend({
 							<i class="bi bi-info-square"></i>
 						</button>
 						<button type="button" class="btn btn-primary">
-							<i class="bi bi-play"></i>
+							<i class="bi <%= playOrPause %>"></i>
 						</button>
 					</div>
 				</div>
@@ -36,17 +39,27 @@ const ItemView = Marionette.View.extend({
 		</div>
 	`),
 	events: {
-		'click': 'onClick',
-		'dblclick': 'onDblClick',
-
 		'click .bi-info-square': 'onClick',
-		'click .bi-play': 'onDblClick',
+		'click .bi-play': 'triggerPlay',
+		'click .bi-pause': 'triggerPause',
+	},
+	templateContext() {
+		return {
+			playOrPause: this.options.playOrPause,
+		};
 	},
 	onClick() {
 		beetsChannel.trigger('item:selected', this.model.get('id'));
 	},
-	onDblClick() {
+	triggerPlay() {
+		this.options.playOrPause = 'bi-pause';
+		this.render();
 		beetsChannel.trigger('item:play', this.model.get('id'));
+	},
+	triggerPause() {
+		this.options.playOrPause = 'bi-play';
+		this.render();
+		beetsChannel.trigger('item:pause', this.model.get('id'));
 	}
 });
 
