@@ -14,6 +14,9 @@ const PlayerView = Marionette.View.extend({
         this.bindEvents(this.beetsChannel, this.beetsEvents);
         this.model = new Item();
     },
+    events: {
+        'ended': 'onEnded',
+    },
     beetsEvents: {
         'item:play': 'doPlay',
     },
@@ -27,6 +30,11 @@ const PlayerView = Marionette.View.extend({
         const url = `${dataUrl}/item/${itemId}/file`;
         this.el.src = url;
         this.el.play();
+        this.model.active = true;
+    },
+    onEnded() {
+        this.model.active = false;
+        this.beetsChannel.trigger('play:ended');
     }
 });
 

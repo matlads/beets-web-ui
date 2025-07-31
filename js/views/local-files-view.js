@@ -6,11 +6,14 @@ const LocalFilesView = Marionette.CollectionView.extend({
   childView: ItemView,
 
   initialize() {
+    this.currentItem = null;
+
     this.beetsChannel = Backbone.Radio.channel('beets');
     this.bindEvents(this.beetsChannel, this.beetsEvents);
   },
   beetsEvents: {
     'item:play': 'markActive',
+    'play:ended': 'playNext',
   },
 
   onBeforeRender() {
@@ -18,10 +21,12 @@ const LocalFilesView = Marionette.CollectionView.extend({
   },
 
   markActive(itemId) {
+    var that = this;
     this.children.each(function (child) {
       if (child.model.get('id') == itemId) {
         child.model.active = true;
         child.$el.addClass('text-bg-success');
+        that.currentItem = child;
       } else {
         child.model.active = false;
         child.$el.removeClass('text-bg-success');
@@ -29,6 +34,19 @@ const LocalFilesView = Marionette.CollectionView.extend({
     });
   },
 
+  playNext() {
+    const bView = this.currentItem;
+    const idx = this.children.findIndexByView(bView);
+    if (idx == -1 || idx === undefined) {
+      // Not in current list.
+      return;
+    }
+    var nextIdx = idx + 1;
+    const nextChild = this.children.findByIndex(nextIdx);
+    if (nextChild) {
+      this.beetsChannel.trigger('item:play', nextChild.model.get('id'));
+    }
+  }
 });
 
 export default LocalFilesView;
