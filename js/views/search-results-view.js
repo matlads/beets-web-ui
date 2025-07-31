@@ -28,8 +28,8 @@ const SearchResultsView = Marionette.View.extend({
     this.bindEvents(this.beetsChannel, this.beetsEvents);
     this.model = new Item();
   },
-  doShowItemDetails(itemId) {
-    this.model = items.findWhere({ "id": itemId });
+  doShowItemDetails(model) {
+    this.model = model;
     this.render();
   }
 });

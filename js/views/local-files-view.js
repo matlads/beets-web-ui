@@ -12,24 +12,21 @@ const LocalFilesView = Marionette.CollectionView.extend({
     this.bindEvents(this.beetsChannel, this.beetsEvents);
   },
   beetsEvents: {
-    'item:play': 'markActive',
+    'item:play': 'doPlay',
     'play:ended': 'playNext',
+    'play:pause': 'doPause'
   },
 
   onBeforeRender() {
     this.collection = items;
   },
 
-  markActive(itemId) {
+  doPlay(model) {
     var that = this;
-    this.children.each(function (child) {
-      if (child.model.get('id') == itemId) {
-        child.model.active = true;
-        child.$el.addClass('text-bg-success');
-        that.currentItem = child;
-      } else {
-        child.model.active = false;
-        child.$el.removeClass('text-bg-success');
+    this.currentItem = model;
+    this.children.each(function (childView) {
+      if (childView.model !== model) {
+        childView.resetView();
       }
     });
   },

@@ -49,17 +49,23 @@ const ItemView = Marionette.View.extend({
 		};
 	},
 	onClick() {
-		beetsChannel.trigger('item:selected', this.model.get('id'));
+		beetsChannel.trigger('item:selected', this.model);
 	},
 	triggerPlay() {
 		this.options.playOrPause = 'bi-pause';
+		this.$el.addClass('text-bg-success');
 		this.render();
-		beetsChannel.trigger('item:play', this.model.get('id'));
+		beetsChannel.trigger('item:play', this.model);
 	},
 	triggerPause() {
+		this.resetView();
+		beetsChannel.trigger('item:pause', this.model);
+	},
+	resetView() {
+		this.model.active = false;
 		this.options.playOrPause = 'bi-play';
+		this.$el.removeClass('text-bg-success');
 		this.render();
-		beetsChannel.trigger('item:pause', this.model.get('id'));
 	}
 });
 
