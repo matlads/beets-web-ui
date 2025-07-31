@@ -5,12 +5,10 @@ import App from "./App.js";
 
   app.start({
     settings: {
-      debug: true,
       dataUrl: "http://127.0.0.1:8337",
     },
     user: {
-      username: "matlads",
-      name: "Martin Atukunda",
+      name: "John Doe",
     },
   });
 })();
