@@ -1,0 +1,30 @@
+{
+  "name": "beets-web-ui",
+  "version": "1.0.0",
+  "description": "A beets web UI",
+  "keywords": [
+    "beets",
+    "web",
+    "ui"
+  ],
+  "homepage": "https://github.com/matlads/beets-web-ui#readme",
+  "bugs": {
+    "url": "https://github.com/matlads/beets-web-ui/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matlads/beets-web-ui.git"
+  },
+  "license": "MIT",
+  "author": "Martin Atukunda <matlads@gmail.com>",
+  "type": "module",
+  "main": "js/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^7.0.6"
+  }
+}
