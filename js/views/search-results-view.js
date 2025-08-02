@@ -5,14 +5,13 @@ const SearchResultsView = Marionette.View.extend({
   template: _.template(`
     <div>
       <h1><%= title %></h1>
+      <h2><%= album %></h2>
     </div>
     <div>
       <i class="bi bi-person"></i>
       <%= artist %>
       •
       <%= year %>
-      • 
-      <%= duration %>
     </div>
     <hr/>
     <div class='lyrics'>
