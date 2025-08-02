@@ -6,7 +6,8 @@ const App = Marionette.Application.extend({
 
   onBeforeStart(app, options) {
     const beetsApi = options.settings.dataUrl;
-    items.url = `${beetsApi}/item/query/`;
+    items.baseUrl = options.settings.dataUrl;
+    items.setQuery().fetch();
     items.fetch();
   },
 

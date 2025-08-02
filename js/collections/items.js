@@ -1,8 +1,14 @@
 import Item from "../models/item.js";
 const ItemsCollection = Backbone.Collection.extend({
   model: Item,
+  baseUrl: null,
   parse: function (data) {
     return data.items || data.results;
+  },
+  setQuery(query = "") {
+    this.url = `${this.baseUrl}/item/query/${query}`;
+    this.trigger("items:setQuery");
+    return this;
   },
 });
 
