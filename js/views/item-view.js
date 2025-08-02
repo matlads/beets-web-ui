@@ -19,11 +19,11 @@ const ItemView = Marionette.View.extend({
 				<div class="col-8">
 					<p class="card-text">
 						<i class="bi bi-journal-album"></i>
-						<%- album %>
+						<a href="#" id="album"><%- album %></a>
 					</p>
 					<p class="card-text">
 						<i class="bi bi-person"></i>
-						<a id="artist"><%- artist %></a>
+						<a href="#" id="artist"><%- artist %></a>
 					</p>
 				</div>
 				<div class="col-4">
@@ -44,6 +44,7 @@ const ItemView = Marionette.View.extend({
     "click .bi-play": "triggerPlay",
     "click .bi-pause": "triggerPause",
     "click #artist": "searchArtist",
+    "click #album": "searchAlbum",
   },
   templateContext() {
     return {
@@ -69,12 +70,20 @@ const ItemView = Marionette.View.extend({
     this.$el.removeClass("text-bg-success");
     this.render();
   },
-  searchArtist() {
-    const artist = this.model.get("artist");
-    const query = `artist:${artist}`;
+  setQuery(query = "") {
     items.setQuery(query).fetch();
     beetsChannel.trigger("item:search", query);
   },
+  searchArtist() {
+    const artist = this.model.get("artist");
+    const query = `artist:${artist}`;
+    this.setQuery(query);
+  },
+  searchAlbum() {
+    const album = this.model.get("album");
+    const query = `album:${album}`;
+    this.setQuery(query);
+  }
 });
 
 export default ItemView;
