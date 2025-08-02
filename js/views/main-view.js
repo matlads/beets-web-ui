@@ -3,7 +3,6 @@ import SearchResultsView from "./search-results-view.js";
 import QueueView from "./queue-view.js";
 import SearchView from "./search-view.js";
 
-
 const MainView = Marionette.View.extend({
   className: "row",
   template: _.template(`
@@ -23,7 +22,7 @@ const MainView = Marionette.View.extend({
   },
 
   regions: {
-    searchRegion: '#search-area',
+    searchRegion: "#search-area",
     localFileRegion: "#left-column",
     searchResultsRegion: "#center-column",
     queueRegion: "#right-column",

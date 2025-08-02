@@ -2,19 +2,19 @@ import ItemView from "./item-view.js";
 import { items } from "../collections/items.js";
 
 const LocalFilesView = Marionette.CollectionView.extend({
-  className: 'border',
+  className: "border",
   childView: ItemView,
 
   initialize() {
     this.currentItem = null;
 
-    this.beetsChannel = Backbone.Radio.channel('beets');
+    this.beetsChannel = Backbone.Radio.channel("beets");
     this.bindEvents(this.beetsChannel, this.beetsEvents);
   },
   beetsEvents: {
-    'item:play': 'doPlay',
-    'play:ended': 'playNext',
-    'play:pause': 'doPause'
+    "item:play": "doPlay",
+    "play:ended": "playNext",
+    "play:pause": "doPause",
   },
 
   onBeforeRender() {
@@ -41,9 +41,9 @@ const LocalFilesView = Marionette.CollectionView.extend({
     var nextIdx = idx + 1;
     const nextChild = this.children.findByIndex(nextIdx);
     if (nextChild) {
-      this.beetsChannel.trigger('item:play', nextChild.model.get('id'));
+      this.beetsChannel.trigger("item:play", nextChild.model.get("id"));
     }
-  }
+  },
 });
 
 export default LocalFilesView;
