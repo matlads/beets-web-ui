@@ -32,16 +32,18 @@ const LocalFilesView = Marionette.CollectionView.extend({
   },
 
   playNext() {
-    const bView = this.currentItem;
-    const idx = this.children.findIndexByView(bView);
-    if (idx == -1 || idx === undefined) {
-      // Not in current list.
-      return;
-    }
-    var nextIdx = idx + 1;
-    const nextChild = this.children.findByIndex(nextIdx);
-    if (nextChild) {
-      this.beetsChannel.trigger("item:play", nextChild.model.get("id"));
+    const bView = this.children.findByModel(this.currentItem);
+    if (bView) {
+      const idx = this.children.findIndexByView(bView);
+      if (idx == -1 || idx === undefined) {
+        // Not in current list.
+        return;
+      }
+      var nextIdx = idx + 1;
+      const nextChild = this.children.findByIndex(nextIdx);
+      if (nextChild) {
+        nextChild.triggerPlay();
+      }
     }
   },
 });
