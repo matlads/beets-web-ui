@@ -1,7 +1,10 @@
+import { Application } from "backbone.marionette";
+import { history } from "backbone";
+
 import IndexView from "./views/index-view.js";
 import { items } from "./collections/items.js";
 
-const App = Marionette.Application.extend({
+const App = Application.extend({
   region: "#app",
 
   onBeforeStart(app, options) {
@@ -16,7 +19,7 @@ const App = Marionette.Application.extend({
 
     this.showView(indexView);
 
-    Backbone.history.start();
+    history.start();
   },
 });
 

@@ -1,7 +1,11 @@
+import { View } from "backbone.marionette";
+import { template } from "underscore";
+import { Radio } from "backbone";
+
 import Item from "../models/item.js";
 
-const CurrentlyPlayingView = Marionette.View.extend({
-  template: _.template(`
+const CurrentlyPlayingView = View.extend({
+  template: template(`
         <div class="card-body">
             <p class="card-text">
                 <small><%= title %></small>
@@ -11,7 +15,7 @@ const CurrentlyPlayingView = Marionette.View.extend({
     `),
   className: "card",
   initialize() {
-    this.beetsChannel = Backbone.Radio.channel("beets");
+    this.beetsChannel = Radio.channel("beets");
     this.bindEvents(this.beetsChannel, this.beetsEvents);
     this.model = new Item();
   },

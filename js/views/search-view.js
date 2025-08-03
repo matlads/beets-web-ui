@@ -1,11 +1,16 @@
+import { View } from "backbone.marionette";
+import { Radio } from "backbone";
+import { template } from "underscore";
 import { items } from "../collections/items.js";
+
+import SearchIcon from '../../icons/person.svg';
 
 const ENTER_KEY = 13;
 
-const SearchView = Marionette.View.extend({
-  template: _.template(`
+const SearchView = View.extend({
+  template: template(`
         <input type="text" class="form-control search-input" placeholder="Search...">
-        <i class="bi bi-search search-icon"></i>
+        <img class="search-icon" src="${SearchIcon}" />
     `),
 
   className: "search-container",
@@ -24,7 +29,7 @@ const SearchView = Marionette.View.extend({
   },
 
   initialize() {
-    this.beetsChannel = Backbone.Radio.channel("beets");
+    this.beetsChannel = Radio.channel("beets");
     this.bindEvents(this.beetsChannel, this.beetsEvents);
   },
 

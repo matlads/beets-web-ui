@@ -1,4 +1,6 @@
-const Item = Backbone.Model.extend({
+import { Model } from 'backbone';
+
+const Item = Model.extend({
   defaults: {
     title: "N/A",
     album: "N/A",

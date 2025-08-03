@@ -1,21 +1,26 @@
-import Item from "../models/item.js";
-import { items } from "../collections/items.js";
+import { View } from "backbone.marionette";
+import { template } from "underscore";
+import { Radio } from "backbone";
 
-const SearchResultsView = Marionette.View.extend({
-  template: _.template(`
+import Item from "../models/item.js";
+
+import FilePerson from '../../icons/person.svg';
+
+const SearchResultsView = View.extend({
+  template: template(`
     <div>
       <h1><%= title %></h1>
       <h2><%= album %></h2>
     </div>
     <div>
-      <i class="bi bi-person"></i>
+      <img src="${FilePerson}" />
       <%= artist %>
       •
       <%= year %>
     </div>
     <hr/>
     <div class='lyrics'>
-    <%= lyrics %>
+<%= lyrics %>
     </div>
   `),
   className: "border",
@@ -23,7 +28,7 @@ const SearchResultsView = Marionette.View.extend({
     "item:selected": "doShowItemDetails",
   },
   initialize() {
-    this.beetsChannel = Backbone.Radio.channel("beets");
+    this.beetsChannel = Radio.channel("beets");
     this.bindEvents(this.beetsChannel, this.beetsEvents);
     this.model = new Item();
   },

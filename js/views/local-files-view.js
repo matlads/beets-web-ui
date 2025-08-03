@@ -1,14 +1,17 @@
+import { CollectionView } from "backbone.marionette";
+import { Radio } from "backbone";
+
 import ItemView from "./item-view.js";
 import { items } from "../collections/items.js";
 
-const LocalFilesView = Marionette.CollectionView.extend({
+const LocalFilesView = CollectionView.extend({
   className: "border",
   childView: ItemView,
 
   initialize() {
     this.currentItem = null;
 
-    this.beetsChannel = Backbone.Radio.channel("beets");
+    this.beetsChannel = Radio.channel("beets");
     this.bindEvents(this.beetsChannel, this.beetsEvents);
   },
   beetsEvents: {

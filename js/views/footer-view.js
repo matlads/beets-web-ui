@@ -1,8 +1,11 @@
+import { View } from "backbone.marionette";
+import { template } from "underscore";
+
 import PlayerView from "./player-view.js";
 import CurrentlyPlayingView from "./currently-playing-view.js";
 
-const FooterView = Marionette.View.extend({
-  template: _.template(`
+const FooterView = View.extend({
+  template: template(`
 		<div id="currently-playing"></div>
 		<div id="player" class="mx-auto"></div>
 		<div>Right</div>`),

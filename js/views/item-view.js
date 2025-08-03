@@ -1,38 +1,47 @@
+import { View } from "backbone.marionette";
+import { Radio } from "backbone";
+import { template } from "underscore";
+
 import Item from "../models/item.js";
 import { items } from "../collections/items.js";
 
-const beetsChannel = Backbone.Radio.channel("beets");
+import FileMusicIcon from '../../icons/file-music.svg';
+import JournalAlbumIcon from '../../icons/journal-album.svg';
+import PersonIcon from '../../icons/person.svg';
+import InfoSquareIcon from '../../icons/info-square.svg';
+import PlayIcon from "../../icons/play.svg";
+import PauseIcon from "../../icons/pause.svg";
 
-const ItemView = Marionette.View.extend({
+const ItemView = View.extend({
   options: {
-    playOrPause: "bi-play",
+    playOrPause: PlayIcon,
   },
   model: Item,
   className: "card",
-  template: _.template(`
+  template: template(`
 		<div class="card-body">
 			<div class="card-title">
-				<i class="bi bi-file-music"></i>
+        <img src="${FileMusicIcon}" />
 				<%- title %>
 			</div>
 			<div class="row">
 				<div class="col-8">
 					<p class="card-text">
-						<i class="bi bi-journal-album"></i>
+            <img src="${JournalAlbumIcon}" />
 						<a href="#" id="album"><%- album %></a>
 					</p>
 					<p class="card-text">
-						<i class="bi bi-person"></i>
+            <img src="${PersonIcon}" />
 						<a href="#" id="artist"><%- artist %></a>
 					</p>
 				</div>
 				<div class="col-4">
 					<div class="btn-group" role="group" aria-label="Basic example">
-						<button type="button" class="btn btn-primary">
-							<i class="bi bi-info-square"></i>
+						<button type="button" class="btn btn-primary info-square">
+              <img src="${InfoSquareIcon}"/>
 						</button>
-						<button type="button" class="btn btn-primary">
-							<i class="bi <%= playOrPause %>"></i>
+						<button id="playOrPause" type="button" class="btn btn-primary play">
+              <img src="<%= playOrPause %>" />
 						</button>
 					</div>
 				</div>
@@ -40,11 +49,17 @@ const ItemView = Marionette.View.extend({
 		</div>
 	`),
   events: {
-    "click .bi-info-square": "onClick",
-    "click .bi-play": "triggerPlay",
-    "click .bi-pause": "triggerPause",
+    "click .info-square": "onClick",
+    "click .play": "triggerPlay",
+    "click .pause": "triggerPause",
     "click #artist": "searchArtist",
     "click #album": "searchAlbum",
+  },
+  ui: {
+    playOrPauseButton: "#playOrPause"
+  },
+  initialize() {
+    this.beetsChannel = Radio.channel("beets");
   },
   templateContext() {
     return {
@@ -52,22 +67,29 @@ const ItemView = Marionette.View.extend({
     };
   },
   onClick() {
-    beetsChannel.trigger("item:selected", this.model);
+    this.beetsChannel.trigger("item:selected", this.model);
   },
   triggerPlay() {
-    this.options.playOrPause = "bi-pause";
-    this.$el.addClass("text-bg-success");
+    this.options.playOrPause = PauseIcon;
+
+    const playOrPauseButton = this.getUI("playOrPauseButton");
+    playOrPauseButton.removeClass("pause");
+    playOrPauseButton.addClass("play");
+
     this.render();
-    beetsChannel.trigger("item:play", this.model);
+    this.beetsChannel.trigger("item:play", this.model);
   },
   triggerPause() {
     this.resetView();
-    beetsChannel.trigger("item:pause", this.model);
+    this.beetsChannel.trigger("item:pause", this.model);
   },
   resetView() {
-    this.model.active = false;
-    this.options.playOrPause = "bi-play";
-    this.$el.removeClass("text-bg-success");
+    this.options.playOrPause = PlayIcon;
+
+    const playOrPauseButton = this.getUI("playOrPauseButton");
+    playOrPauseButton.removeClass("play");
+    playOrPauseButton.addClass("apuse");
+
     this.render();
   },
   setQuery(query = "") {

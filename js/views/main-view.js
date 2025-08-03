@@ -1,11 +1,14 @@
+import { View } from "backbone.marionette";
+import { template } from "underscore";
+
 import LocalFilesView from "./local-files-view.js";
 import SearchResultsView from "./search-results-view.js";
 import QueueView from "./queue-view.js";
 import SearchView from "./search-view.js";
 
-const MainView = Marionette.View.extend({
+const MainView = View.extend({
   className: "row",
-  template: _.template(`
+  template: template(`
 		<div class="col-3">
       <div id="search-area"></div>
       <div id="left-column"></div>

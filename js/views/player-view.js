@@ -1,15 +1,19 @@
+import { View } from "backbone.marionette";
+import { template } from "underscore";
+import { Radio } from "backbone";
+
 import Item from "../models/item.js";
 
-const PlayerView = Marionette.View.extend({
+const PlayerView = View.extend({
   tagName: "audio",
   attributes: {
     controls: true,
   },
-  template: _.template(`
+  template: template(`
         Your browser does not support the audio element.
     `),
   initialize() {
-    this.beetsChannel = Backbone.Radio.channel("beets");
+    this.beetsChannel = Radio.channel("beets");
     this.bindEvents(this.beetsChannel, this.beetsEvents);
     this.model = new Item();
   },
@@ -33,10 +37,10 @@ const PlayerView = Marionette.View.extend({
     const url = `${dataUrl}/item/${itemId}/file`;
     this.el.src = url;
     this.el.play();
-    this.model.active = true;
+    // this.model.active = true;
   },
   onEnded() {
-    this.model.active = false;
+    // this.model.active = false;
     this.beetsChannel.trigger("play:ended");
   },
 });

@@ -1,5 +1,7 @@
+import { Collection } from "backbone";
 import Item from "../models/item.js";
-const ItemsCollection = Backbone.Collection.extend({
+
+const ItemsCollection = Collection.extend({
   model: Item,
   baseUrl: null,
   parse: function (data) {

@@ -1,9 +1,12 @@
+import { View } from "backbone.marionette";
+import { template } from "underscore";
+
 import HeaderView from "./header-view.js";
 import FooterView from "./footer-view.js";
 import MainView from "./main-view.js";
 
-const IndexView = Marionette.View.extend({
-  template: _.template(`
+const IndexView = View.extend({
+  template: template(`
 		<nav id="header" class="navbar fixed-top bg-body-tertiary"></nav>
 		<main id="main" class="mh-100"></main>
 		<nav id="footer" class="navbar fixed-bottom bg-body-tertiary"></nav>
