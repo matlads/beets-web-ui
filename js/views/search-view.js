@@ -14,12 +14,13 @@ const SearchView = Marionette.View.extend({
     searchInput: ".search-input",
   },
 
-  events: {
-    keydown: "keyAction",
-  },
-
   beetsEvents: {
     "item:search": "onItemSearch",
+  },
+
+  triggers: {
+    'keyup input': 'data:entered',
+    'click i': 'search:icon:clicked',
   },
 
   initialize() {
@@ -27,7 +28,7 @@ const SearchView = Marionette.View.extend({
     this.bindEvents(this.beetsChannel, this.beetsEvents);
   },
 
-  keyAction(e) {
+  onDataEntered(view, e) {
     if (e.which === ENTER_KEY) {
       // perform the search
       const t = e.target.value;
@@ -39,6 +40,12 @@ const SearchView = Marionette.View.extend({
     const $searchInput = this.getUI("searchInput");
     $searchInput.val(searchString);
   },
+
+  onSearchIconClicked(view, event) {
+    const $searchInput = this.getUI("searchInput");
+    const t = $searchInput.val();
+    items.setQuery(t).fetch();
+  }
 });
 
 export default SearchView;
