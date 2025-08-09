@@ -7,7 +7,7 @@ import ProfileModel from "../models/profile.js";
 const HeaderView = View.extend({
   template: template(`
 		<div>
-				<a class="navbar-brand" href="#">Beets</a>
+				<a class="navbar-brand">Beets</a>
 		</div>
     <div>
     </div>
