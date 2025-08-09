@@ -1,8 +1,7 @@
 import { View } from "backbone.marionette";
 import { Radio } from "backbone";
 import { template } from "underscore";
-import { items } from "../collections/items.js";
-
+import { router } from "../routers/beets-router.js";
 import SearchIcon from '../../icons/person.svg';
 
 const ENTER_KEY = 13;
@@ -35,21 +34,25 @@ const SearchView = View.extend({
 
   onDataEntered(view, e) {
     if (e.which === ENTER_KEY) {
-      // perform the search
-      const t = e.target.value;
-      items.setQuery(t).fetch();
+      const query = e.target.value;
+      this.navigateRouter(query);
     }
   },
 
-  onItemSearch(searchString) {
+  onItemSearch(query) {
     const $searchInput = this.getUI("searchInput");
-    $searchInput.val(searchString);
+    $searchInput.val(query);
+    this.navigateRouter(query);
   },
 
   onSearchIconClicked(view, event) {
     const $searchInput = this.getUI("searchInput");
-    const t = $searchInput.val();
-    items.setQuery(t).fetch();
+    const query = $searchInput.val();
+    this.navigateRouter(query);
+  },
+
+  navigateRouter(query) {
+    router.navigate('item/query/' + encodeURIComponent(query), true);
   }
 });
 
