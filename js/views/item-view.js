@@ -3,7 +3,6 @@ import { Radio } from "backbone";
 import { template } from "underscore";
 
 import Item from "../models/item.js";
-import { items } from "../collections/items.js";
 
 import FileMusicIcon from '../../icons/file-music.svg';
 import JournalAlbumIcon from '../../icons/journal-album.svg';
@@ -28,11 +27,11 @@ const ItemView = View.extend({
 				<div class="col-8">
 					<p class="card-text">
             <img src="${JournalAlbumIcon}" />
-						<a href="#" id="album"><%- album %></a>
+						<a href="/item/query/album:<%- album %>" id="album"><%- album %></a>
 					</p>
 					<p class="card-text">
             <img src="${PersonIcon}" />
-						<a href="#" id="artist"><%- artist %></a>
+						<a href="/item/query/artist:<%- artist %>" id="artist"><%- artist %></a>
 					</p>
 				</div>
 				<div class="col-4">
@@ -93,15 +92,16 @@ const ItemView = View.extend({
     this.render();
   },
   setQuery(query = "") {
-    items.setQuery(query).fetch();
-    beetsChannel.trigger("item:search", query);
+    this.beetsChannel.trigger("item:search", query);
   },
-  searchArtist() {
+  searchArtist(event) {
+    event.preventDefault();
     const artist = this.model.get("artist");
     const query = `artist:${artist}`;
     this.setQuery(query);
   },
-  searchAlbum() {
+  searchAlbum(event) {
+    event.preventDefault();
     const album = this.model.get("album");
     const query = `album:${album}`;
     this.setQuery(query);
