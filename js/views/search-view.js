@@ -2,7 +2,7 @@ import { View } from "backbone.marionette";
 import { Radio } from "backbone";
 import { template } from "underscore";
 import { router } from "../routers/beets-router.js";
-import SearchIcon from '../../icons/person.svg';
+import SearchIcon from '../../icons/search.svg';
 
 const ENTER_KEY = 13;
 
