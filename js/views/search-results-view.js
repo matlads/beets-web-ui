@@ -18,7 +18,7 @@ const SearchResultsView = BaseView.extend({
       <%= year %>
     </div>
     <hr/>
-    <div class='lyrics'>
+    <div class='search-results-view__lyrics'>
 <%= lyrics %>
     </div>
   `),

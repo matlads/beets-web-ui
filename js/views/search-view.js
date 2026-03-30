@@ -6,14 +6,14 @@ const ENTER_KEY = 13;
 
 const SearchView = BaseView.extend({
   template: template(`
-        <input type="text" class="form-control search-input" placeholder="Search...">
-        <img class="search-icon" src="${SearchIcon}" />
+        <input type="text" class="form-control search-view__input" placeholder="Search...">
+        <img class="search-view__icon" src="${SearchIcon}" />
     `),
 
-  className: 'search-container',
+  className: 'search-view__container',
 
   ui: {
-    searchInput: '.search-input',
+    searchInput: '.search-view__input',
   },
 
   beetsEvents: {
