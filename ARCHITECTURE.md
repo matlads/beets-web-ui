@@ -125,5 +125,5 @@ Prefer Radio events over direct method calls for cross-component communication. 
 
 ---
 
-*Last updated: March 30, 2026*  
+*Last updated: March 30, 2026*
 *Based on beets-web-ui version 1.0.0*

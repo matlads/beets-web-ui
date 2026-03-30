@@ -10,9 +10,9 @@ const App = Application.extend({
   onBeforeStart(app, options) {
     const items = new ItemsCollection();
     items.baseUrl = options.settings.dataUrl;
-    
+
     const router = createRouter(items);
-    
+
     options.items = items;
     options.router = router;
   },

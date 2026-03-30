@@ -35,7 +35,7 @@ npm test         # Placeholder - no tests configured
 ```
 js/
 ├── models/           # Backbone Models
-├── collections/      # Backbone Collections  
+├── collections/      # Backbone Collections
 ├── views/           # Marionette Views
 ├── routers/         # Backbone Routers
 ├── templates/       # Underscore templates (if any)
@@ -86,7 +86,7 @@ const ItemView = View.extend({
   doPlay: function() {
     // Traditional function expression
   },
-  
+
   onRender: function() {
     // Marionette lifecycle method
   }
@@ -166,27 +166,27 @@ const ItemView = BaseView.extend({
       <button class="play-btn">${PlayIcon} Play</button>
     </div>
   `),
-  
+
   // UI hash for cached jQuery selectors
   ui: {
     playButton: ".play-btn"
   },
-  
+
   // Triggers hash for DOM-to-view events
   triggers: {
     "click @ui.playButton": "play:item"
   },
-  
+
   // beetsEvents for Radio channel events
   beetsEvents: {
     "player:stateChanged": "onPlayerStateChanged"
   },
-  
+
   // Event handlers
   onPlayItem: function() {
     this.beetsChannel.trigger("player:play", this.model);
   },
-  
+
   onPlayerStateChanged: function(state) {
     // Update view based on player state
   }
@@ -259,5 +259,5 @@ Agents should maintain the existing simple toolchain unless explicitly asked to 
 
 ---
 
-*Last updated: March 30, 2026*  
+*Last updated: March 30, 2026*
 *Based on analysis of beets-web-ui repository*
