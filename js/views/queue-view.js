@@ -1,5 +1,5 @@
-import BaseView from "./base-view.js";
-import { template } from "underscore";
+import BaseView from './base-view.js';
+import { template } from 'underscore';
 
 const QueueView = BaseView.extend({
   template: template(`
@@ -21,17 +21,17 @@ const QueueView = BaseView.extend({
       <% } %>
     </div>
   `),
-  className: "border",
-  
+  className: 'border',
+
   initialize() {
     BaseView.prototype.initialize.apply(this, arguments);
     this.queue = [];
   },
-  
+
   beetsEvents: {
-    "item:play": "addToQueue",
+    'item:play': 'addToQueue',
   },
-  
+
   addToQueue(model) {
     this.queue.unshift(model);
     if (this.queue.length > 5) {
@@ -39,7 +39,7 @@ const QueueView = BaseView.extend({
     }
     this.render();
   },
-  
+
   templateContext() {
     return {
       queue: this.queue,

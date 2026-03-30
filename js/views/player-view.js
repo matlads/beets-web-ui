@@ -1,10 +1,10 @@
-import BaseView from "./base-view.js";
-import { template } from "underscore";
+import BaseView from './base-view.js';
+import { template } from 'underscore';
 
-import Item from "../models/item.js";
+import Item from '../models/item.js';
 
 const PlayerView = BaseView.extend({
-  tagName: "audio",
+  tagName: 'audio',
   attributes: {
     controls: true,
   },
@@ -16,21 +16,21 @@ const PlayerView = BaseView.extend({
     this.model = new Item();
   },
   events: {
-    ended: "onEnded",
+    ended: 'onEnded',
   },
   beetsEvents: {
-    "item:play": "doPlay",
-    "item:pause": "doPause",
+    'item:play': 'doPlay',
+    'item:pause': 'doPause',
   },
   doPlay(model) {
     this.model = model;
     this.play();
   },
-  doPause(itemId) {
+  doPause(_itemId) {
     this.el.pause();
   },
   play() {
-    const itemId = this.model.get("id");
+    const itemId = this.model.get('id');
     const dataUrl = this.options.settings.dataUrl;
     const url = `${dataUrl}/item/${itemId}/file`;
     this.el.src = url;
@@ -39,7 +39,7 @@ const PlayerView = BaseView.extend({
   },
   onEnded() {
     // this.model.active = false;
-    this.beetsChannel.trigger("play:ended");
+    this.beetsChannel.trigger('play:ended');
   },
 });
 

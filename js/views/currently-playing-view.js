@@ -1,7 +1,7 @@
-import BaseView from "./base-view.js";
-import { template } from "underscore";
+import BaseView from './base-view.js';
+import { template } from 'underscore';
 
-import Item from "../models/item.js";
+import Item from '../models/item.js';
 
 const CurrentlyPlayingView = BaseView.extend({
   template: template(`
@@ -12,13 +12,13 @@ const CurrentlyPlayingView = BaseView.extend({
             </p>
         </div>
     `),
-  className: "card",
+  className: 'card',
   initialize() {
     BaseView.prototype.initialize.apply(this, arguments);
     this.model = new Item();
   },
   beetsEvents: {
-    "item:play": "doPlay",
+    'item:play': 'doPlay',
   },
   doPlay(model) {
     this.model = model;

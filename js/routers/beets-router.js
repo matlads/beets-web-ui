@@ -1,16 +1,40 @@
-import { Router } from "backbone";
-import { items } from "../collections/items";
+import { Router } from 'backbone';
+import { Radio } from 'backbone';
 
-var BeetsRouter = Router.extend({
-    routes: {
-        "item/query/:query": "itemQuery",
-    },
-    itemQuery: function (query) {
-        const queryURL = query.split(/\s+/).map(encodeURIComponent).join('/');
-        items.setQuery(queryURL).fetch();
-    }
+const BeetsRouter = Router.extend({
+  routes: {
+    'item/query/:query': 'itemQuery',
+    'player': 'playerRoute',
+    'queue': 'queueRoute',
+    'profile': 'profileRoute',
+  },
+  
+  initialize: function(options = {}) {
+    this.items = options.items;
+    this.beetsChannel = Radio.channel('beets');
+    Router.prototype.initialize.call(this, options);
+  },
+  
+  itemQuery: function (query) {
+    const queryURL = query.split(/\s+/).map(encodeURIComponent).join('/');
+    this.items.setQuery(queryURL).fetch();
+  },
+  
+  playerRoute: function() {
+    this.beetsChannel.trigger('route:player');
+  },
+  
+  queueRoute: function() {
+    this.beetsChannel.trigger('route:queue');
+  },
+  
+  profileRoute: function() {
+    this.beetsChannel.trigger('route:profile');
+  },
 });
 
-const router = new BeetsRouter({ pushState: true });
+export { BeetsRouter };
 
-export { router, BeetsRouter };
+export function createRouter(items, options = {}) {
+  return new BeetsRouter({ items, pushState: true, ...options });
+}

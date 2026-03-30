@@ -1,9 +1,9 @@
-import BaseView from "./base-view.js";
-import { template } from "underscore";
+import BaseView from './base-view.js';
+import { template } from 'underscore';
 
-import Item from "../models/item.js";
+import Item from '../models/item.js';
 
-import { PersonIcon as FilePerson } from "../icons.js";
+import { PersonIcon as FilePerson } from '../icons.js';
 
 const SearchResultsView = BaseView.extend({
   template: template(`
@@ -22,9 +22,9 @@ const SearchResultsView = BaseView.extend({
 <%= lyrics %>
     </div>
   `),
-  className: "border",
+  className: 'border',
   beetsEvents: {
-    "item:selected": "doShowItemDetails",
+    'item:selected': 'doShowItemDetails',
   },
   initialize() {
     BaseView.prototype.initialize.apply(this, arguments);

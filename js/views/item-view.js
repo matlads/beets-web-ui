@@ -1,7 +1,7 @@
-import BaseView from "./base-view.js";
-import { template } from "underscore";
+import BaseView from './base-view.js';
+import { template } from 'underscore';
 
-import Item from "../models/item.js";
+import Item from '../models/item.js';
 
 import {
   FileMusicIcon,
@@ -10,14 +10,14 @@ import {
   InfoSquareIcon,
   PlayIcon,
   PauseIcon,
-} from "../icons.js";
+} from '../icons.js';
 
 const ItemView = BaseView.extend({
   options: {
     playOrPause: PlayIcon,
   },
   model: Item,
-  className: "card",
+  className: 'card',
   template: template(`
 		<div class="card-body">
 			<div class="card-title">
@@ -49,14 +49,14 @@ const ItemView = BaseView.extend({
 		</div>
 	`),
   events: {
-    "click .info-square": "onClick",
-    "click .play": "triggerPlay",
-    "click .pause": "triggerPause",
-    "click #artist": "searchArtist",
-    "click #album": "searchAlbum",
+    'click .info-square': 'onClick',
+    'click .play': 'triggerPlay',
+    'click .pause': 'triggerPause',
+    'click #artist': 'searchArtist',
+    'click #album': 'searchAlbum',
   },
   ui: {
-    playOrPauseButton: "#playOrPause"
+    playOrPauseButton: '#playOrPause',
   },
   templateContext() {
     return {
@@ -64,46 +64,46 @@ const ItemView = BaseView.extend({
     };
   },
   onClick() {
-    this.beetsChannel.trigger("item:selected", this.model);
+    this.beetsChannel.trigger('item:selected', this.model);
   },
   triggerPlay() {
     this.options.playOrPause = PauseIcon;
 
-    const playOrPauseButton = this.getUI("playOrPauseButton");
-    playOrPauseButton.removeClass("pause");
-    playOrPauseButton.addClass("play");
+    const playOrPauseButton = this.getUI('playOrPauseButton');
+    playOrPauseButton.removeClass('pause');
+    playOrPauseButton.addClass('play');
 
     this.render();
-    this.beetsChannel.trigger("item:play", this.model);
+    this.beetsChannel.trigger('item:play', this.model);
   },
   triggerPause() {
     this.resetView();
-    this.beetsChannel.trigger("item:pause", this.model);
+    this.beetsChannel.trigger('item:pause', this.model);
   },
   resetView() {
     this.options.playOrPause = PlayIcon;
 
-    const playOrPauseButton = this.getUI("playOrPauseButton");
-    playOrPauseButton.removeClass("play");
-    playOrPauseButton.addClass("pause");
+    const playOrPauseButton = this.getUI('playOrPauseButton');
+    playOrPauseButton.removeClass('play');
+    playOrPauseButton.addClass('pause');
 
     this.render();
   },
-  setQuery(query = "") {
-    this.beetsChannel.trigger("item:search", query);
+  setQuery(query = '') {
+    this.beetsChannel.trigger('item:search', query);
   },
   searchArtist(event) {
     event.preventDefault();
-    const artist = this.model.get("artist");
+    const artist = this.model.get('artist');
     const query = `artist:${artist}`;
     this.setQuery(query);
   },
   searchAlbum(event) {
     event.preventDefault();
-    const album = this.model.get("album");
+    const album = this.model.get('album');
     const query = `album:${album}`;
     this.setQuery(query);
-  }
+  },
 });
 
 export default ItemView;

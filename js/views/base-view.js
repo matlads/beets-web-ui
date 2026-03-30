@@ -1,5 +1,5 @@
-import { View } from "backbone.marionette";
-import { Radio } from "backbone";
+import { View } from 'backbone.marionette';
+import { Radio } from 'backbone';
 
 /**
  * Base view that automatically sets up the Radio channel for beets events.
@@ -12,8 +12,8 @@ const BaseView = View.extend({
       View.prototype.initialize.apply(this, arguments);
     }
 
-    this.beetsChannel = Radio.channel("beets");
-    
+    this.beetsChannel = Radio.channel('beets');
+
     if (this.beetsEvents) {
       this.bindEvents(this.beetsChannel, this.beetsEvents);
     }

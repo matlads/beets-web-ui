@@ -34,7 +34,7 @@ describe('ItemsCollection', () => {
     items.on('items:setQuery', () => {
       eventTriggered = true;
     });
-    
+
     items.setQuery('album:test');
     expect(eventTriggered).toBe(true);
   });

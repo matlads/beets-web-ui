@@ -1,13 +1,13 @@
-import { View } from "backbone.marionette";
-import { template } from "underscore";
+import { View } from 'backbone.marionette';
+import { template } from 'underscore';
 
-import LocalFilesView from "./local-files-view.js";
-import SearchResultsView from "./search-results-view.js";
-import QueueView from "./queue-view.js";
-import SearchView from "./search-view.js";
+import LocalFilesView from './local-files-view.js';
+import SearchResultsView from './search-results-view.js';
+import QueueView from './queue-view.js';
+import SearchView from './search-view.js';
 
 const MainView = View.extend({
-  className: "row",
+  className: 'row',
   template: template(`
 		<div class="col-3">
       <div id="search-area"></div>
@@ -25,17 +25,17 @@ const MainView = View.extend({
   },
 
   regions: {
-    searchRegion: "#search-area",
-    localFileRegion: "#left-column",
-    searchResultsRegion: "#center-column",
-    queueRegion: "#right-column",
+    searchRegion: '#search-area',
+    localFileRegion: '#left-column',
+    searchResultsRegion: '#center-column',
+    queueRegion: '#right-column',
   },
 
-  onRender(options) {
-    this.showChildView("searchRegion", this.searchView);
-    this.showChildView("localFileRegion", this.localFilesView);
-    this.showChildView("searchResultsRegion", this.searchResultsView);
-    this.showChildView("queueRegion", this.queueView);
+  onRender(_options) {
+    this.showChildView('searchRegion', this.searchView);
+    this.showChildView('localFileRegion', this.localFilesView);
+    this.showChildView('searchResultsRegion', this.searchResultsView);
+    this.showChildView('queueRegion', this.queueView);
   },
 });
 export default MainView;

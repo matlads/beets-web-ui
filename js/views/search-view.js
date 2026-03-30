@@ -1,7 +1,6 @@
-import BaseView from "./base-view.js";
-import { template } from "underscore";
-import { router } from "../routers/beets-router.js";
-import { SearchIcon } from "../icons.js";
+import BaseView from './base-view.js';
+import { template } from 'underscore';
+import { SearchIcon } from '../icons.js';
 
 const ENTER_KEY = 13;
 
@@ -11,14 +10,14 @@ const SearchView = BaseView.extend({
         <img class="search-icon" src="${SearchIcon}" />
     `),
 
-  className: "search-container",
+  className: 'search-container',
 
   ui: {
-    searchInput: ".search-input",
+    searchInput: '.search-input',
   },
 
   beetsEvents: {
-    "item:search": "onItemSearch",
+    'item:search': 'onItemSearch',
   },
 
   triggers: {
@@ -34,20 +33,20 @@ const SearchView = BaseView.extend({
   },
 
   onItemSearch(query) {
-    const $searchInput = this.getUI("searchInput");
+    const $searchInput = this.getUI('searchInput');
     $searchInput.val(query);
     this.navigateRouter(query);
   },
 
-  onSearchIconClicked(view, event) {
-    const $searchInput = this.getUI("searchInput");
+  onSearchIconClicked(_view, _event) {
+    const $searchInput = this.getUI('searchInput');
     const query = $searchInput.val();
     this.navigateRouter(query);
   },
 
   navigateRouter(query) {
-    router.navigate('item/query/' + encodeURIComponent(query), true);
-  }
+    this.options.router.navigate('item/query/' + encodeURIComponent(query), true);
+  },
 });
 
 export default SearchView;

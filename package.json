@@ -26,14 +26,25 @@
     "test:ui": "vitest --ui",
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint js/ --ext .js",
+    "lint:fix": "eslint js/ --ext .js --fix",
+    "format": "prettier --write 'js/**/*.js' 'css/**/*.css'",
+    "format:check": "prettier --check 'js/**/*.js' 'css/**/*.css'"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/backbone": "^1.4.23",
+    "@types/backbone.marionette": "^3.3.19",
+    "@types/backbone.radio": "^0.8.40",
+    "@types/jquery": "^4.0.0",
+    "@types/underscore": "^1.13.0",
     "@vitest/ui": "^4.1.2",
     "eslint": "^10.1.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
     "prettier": "^3.8.1",
+    "typescript": "^6.0.2",
     "vite": "^7.0.6",
     "vitest": "^4.1.2"
   },

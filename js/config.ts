@@ -1,3 +1,5 @@
+/// <reference types="vite/client" />
+
 // Configuration module for beets-web-ui
 // Reads environment variables (via Vite's import.meta.env)
 

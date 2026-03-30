@@ -1,8 +1,8 @@
-import { View } from "backbone.marionette";
-import { template } from "underscore";
+import { View } from 'backbone.marionette';
+import { template } from 'underscore';
 
-import ProfileView from "./profile-view.js";
-import ProfileModel from "../models/profile.js";
+import ProfileView from './profile-view.js';
+import ProfileModel from '../models/profile.js';
 
 const HeaderView = View.extend({
   template: template(`
@@ -12,10 +12,10 @@ const HeaderView = View.extend({
     <div>
     </div>
 		<div id="profile">Profile</div>`),
-  className: "container text-center",
+  className: 'container text-center',
 
   regions: {
-    profileRegion: "#profile",
+    profileRegion: '#profile',
   },
 
   onRender() {
@@ -23,7 +23,7 @@ const HeaderView = View.extend({
       name: this.options.user.name,
     });
     const profileView = new ProfileView({ model: profile });
-    this.showChildView("profileRegion", profileView);
+    this.showChildView('profileRegion', profileView);
   },
 });
 
