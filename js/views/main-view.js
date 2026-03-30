@@ -19,8 +19,8 @@ const MainView = View.extend({
 
   initialize(options) {
     this.localFilesView = new LocalFilesView(options);
-    this.searchResultsView = new SearchResultsView();
-    this.queueView = new QueueView();
+    this.searchResultsView = new SearchResultsView(options);
+    this.queueView = new QueueView(options);
     this.searchView = new SearchView(options);
   },
 

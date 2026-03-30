@@ -25,6 +25,7 @@ const SearchResultsView = BaseView.extend({
   className: 'border',
   beetsEvents: {
     'item:selected': 'doShowItemDetails',
+    'item:play': 'doShowItemDetails',
   },
   initialize() {
     BaseView.prototype.initialize.apply(this, arguments);
@@ -32,7 +33,32 @@ const SearchResultsView = BaseView.extend({
   },
   doShowItemDetails(model) {
     this.model = model;
-    this.render();
+
+    if (!this.model.get('lyrics') && this.model.get('id')) {
+      this.fetchItemDetails();
+    } else {
+      this.render();
+    }
+  },
+
+  fetchItemDetails() {
+    const itemId = this.model.get('id');
+    const dataUrl = this.options.settings.dataUrl;
+
+    if (!itemId || !dataUrl) {
+      this.render();
+      return;
+    }
+
+    this.model.fetch({
+      url: `${dataUrl}/item/${itemId}`,
+      success: () => {
+        this.render();
+      },
+      error: () => {
+        this.render();
+      }
+    });
   },
 });
 
