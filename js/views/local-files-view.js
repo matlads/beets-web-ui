@@ -9,10 +9,16 @@ const LocalFilesView = CollectionView.extend({
   childView: ItemView,
 
   initialize() {
+    if (CollectionView.prototype.initialize) {
+      CollectionView.prototype.initialize.apply(this, arguments);
+    }
+    
     this.currentItem = null;
-
     this.beetsChannel = Radio.channel("beets");
-    this.bindEvents(this.beetsChannel, this.beetsEvents);
+    
+    if (this.beetsEvents) {
+      this.bindEvents(this.beetsChannel, this.beetsEvents);
+    }
   },
   beetsEvents: {
     "item:play": "doPlay",

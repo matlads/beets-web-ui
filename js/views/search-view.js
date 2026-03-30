@@ -1,12 +1,11 @@
-import { View } from "backbone.marionette";
-import { Radio } from "backbone";
+import BaseView from "./base-view.js";
 import { template } from "underscore";
 import { router } from "../routers/beets-router.js";
-import SearchIcon from '../../icons/search.svg';
+import { SearchIcon } from "../icons.js";
 
 const ENTER_KEY = 13;
 
-const SearchView = View.extend({
+const SearchView = BaseView.extend({
   template: template(`
         <input type="text" class="form-control search-input" placeholder="Search...">
         <img class="search-icon" src="${SearchIcon}" />
@@ -25,11 +24,6 @@ const SearchView = View.extend({
   triggers: {
     'keyup input': 'data:entered',
     'click i': 'search:icon:clicked',
-  },
-
-  initialize() {
-    this.beetsChannel = Radio.channel("beets");
-    this.bindEvents(this.beetsChannel, this.beetsEvents);
   },
 
   onDataEntered(view, e) {

@@ -1,10 +1,9 @@
-import { View } from "backbone.marionette";
+import BaseView from "./base-view.js";
 import { template } from "underscore";
-import { Radio } from "backbone";
 
 import Item from "../models/item.js";
 
-const CurrentlyPlayingView = View.extend({
+const CurrentlyPlayingView = BaseView.extend({
   template: template(`
         <div class="card-body">
             <p class="card-text">
@@ -15,8 +14,7 @@ const CurrentlyPlayingView = View.extend({
     `),
   className: "card",
   initialize() {
-    this.beetsChannel = Radio.channel("beets");
-    this.bindEvents(this.beetsChannel, this.beetsEvents);
+    BaseView.prototype.initialize.apply(this, arguments);
     this.model = new Item();
   },
   beetsEvents: {

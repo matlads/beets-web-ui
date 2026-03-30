@@ -1,12 +1,11 @@
-import { View } from "backbone.marionette";
+import BaseView from "./base-view.js";
 import { template } from "underscore";
-import { Radio } from "backbone";
 
 import Item from "../models/item.js";
 
-import FilePerson from '../../icons/person.svg';
+import { PersonIcon as FilePerson } from "../icons.js";
 
-const SearchResultsView = View.extend({
+const SearchResultsView = BaseView.extend({
   template: template(`
     <div>
       <h1><%= title %></h1>
@@ -28,8 +27,7 @@ const SearchResultsView = View.extend({
     "item:selected": "doShowItemDetails",
   },
   initialize() {
-    this.beetsChannel = Radio.channel("beets");
-    this.bindEvents(this.beetsChannel, this.beetsEvents);
+    BaseView.prototype.initialize.apply(this, arguments);
     this.model = new Item();
   },
   doShowItemDetails(model) {

@@ -1,17 +1,18 @@
-import { View } from "backbone.marionette";
-import { Radio } from "backbone";
+import BaseView from "./base-view.js";
 import { template } from "underscore";
 
 import Item from "../models/item.js";
 
-import FileMusicIcon from '../../icons/file-music.svg';
-import JournalAlbumIcon from '../../icons/journal-album.svg';
-import PersonIcon from '../../icons/person.svg';
-import InfoSquareIcon from '../../icons/info-square.svg';
-import PlayIcon from "../../icons/play.svg";
-import PauseIcon from "../../icons/pause.svg";
+import {
+  FileMusicIcon,
+  JournalAlbumIcon,
+  PersonIcon,
+  InfoSquareIcon,
+  PlayIcon,
+  PauseIcon,
+} from "../icons.js";
 
-const ItemView = View.extend({
+const ItemView = BaseView.extend({
   options: {
     playOrPause: PlayIcon,
   },
@@ -57,9 +58,6 @@ const ItemView = View.extend({
   ui: {
     playOrPauseButton: "#playOrPause"
   },
-  initialize() {
-    this.beetsChannel = Radio.channel("beets");
-  },
   templateContext() {
     return {
       playOrPause: this.options.playOrPause,
@@ -87,7 +85,7 @@ const ItemView = View.extend({
 
     const playOrPauseButton = this.getUI("playOrPauseButton");
     playOrPauseButton.removeClass("play");
-    playOrPauseButton.addClass("apuse");
+    playOrPauseButton.addClass("pause");
 
     this.render();
   },

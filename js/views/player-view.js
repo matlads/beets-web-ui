@@ -1,10 +1,9 @@
-import { View } from "backbone.marionette";
+import BaseView from "./base-view.js";
 import { template } from "underscore";
-import { Radio } from "backbone";
 
 import Item from "../models/item.js";
 
-const PlayerView = View.extend({
+const PlayerView = BaseView.extend({
   tagName: "audio",
   attributes: {
     controls: true,
@@ -13,8 +12,7 @@ const PlayerView = View.extend({
         Your browser does not support the audio element.
     `),
   initialize() {
-    this.beetsChannel = Radio.channel("beets");
-    this.bindEvents(this.beetsChannel, this.beetsEvents);
+    BaseView.prototype.initialize.apply(this, arguments);
     this.model = new Item();
   },
   events: {
