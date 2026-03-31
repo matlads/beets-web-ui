@@ -124,6 +124,40 @@ The built `dist/` directory contains static files that can be deployed to any we
 - Vercel
 - Traditional web server (Apache, nginx)
 
+### GitHub Pages Deployment
+
+This repository includes a GitHub Actions workflow for automatic deployment to GitHub Pages:
+
+1. **Enable GitHub Pages in repository settings**:
+   - Go to Settings → Pages
+   - Select "GitHub Actions" as the source
+   - The workflow will deploy to `https://matlads.github.io/beets-web-ui/`
+
+2. **Configure environment variables** (optional):
+   - Set repository secrets for production configuration:
+     - `VITE_API_URL`: URL of your beets server (e.g., `https://your-beets-server.example.com`)
+     - `VITE_USER_NAME`: Default user display name
+
+3. **Manual deployment**:
+   ```bash
+   # Build with production settings
+   VITE_BASE_PATH=/beets-web-ui/ npm run build
+
+   # Deploy the `dist/` directory to your web server
+   ```
+
+The deployment workflow (`deploy.yml`) runs on pushes to `main` branch and includes:
+- Automated testing before deployment
+- Production build with configurable base path
+- Secure deployment using GitHub Pages action
+
+### Custom Domain
+
+To use a custom domain with GitHub Pages:
+1. Set `VITE_BASE_PATH: /` in the deployment workflow
+2. Configure your custom domain in repository Settings → Pages
+3. Update DNS records to point to GitHub Pages
+
 ## Contributing
 
 See [AGENTS.md](AGENTS.md) for detailed development guidelines and code style.
