@@ -1,43 +1,51 @@
-import { items } from "../collections/items.js";
+import BaseView from './base-view.js';
+import { template } from 'underscore';
+import { SearchIcon } from '../icons.js';
 
 const ENTER_KEY = 13;
 
-const SearchView = Marionette.View.extend({
-  template: _.template(`
-        <input type="text" class="form-control search-input" placeholder="Search...">
-        <i class="bi bi-search search-icon"></i>
+const SearchView = BaseView.extend({
+  template: template(`
+        <input type="text" class="form-control search-view__input" placeholder="Search...">
+        <img class="search-view__icon" src="${SearchIcon}" />
     `),
 
-  className: "search-container",
+  className: 'search-view__container',
 
   ui: {
-    searchInput: ".search-input",
-  },
-
-  events: {
-    keydown: "keyAction",
+    searchInput: '.search-view__input',
   },
 
   beetsEvents: {
-    "item:search": "onItemSearch",
+    'item:search': 'onItemSearch',
   },
 
-  initialize() {
-    this.beetsChannel = Backbone.Radio.channel("beets");
-    this.bindEvents(this.beetsChannel, this.beetsEvents);
+  triggers: {
+    'keyup input': 'data:entered',
+    'click i': 'search:icon:clicked',
   },
 
-  keyAction(e) {
+  onDataEntered(view, e) {
     if (e.which === ENTER_KEY) {
-      // perform the search
-      const t = e.target.value;
-      items.setQuery(t).fetch();
+      const query = e.target.value;
+      this.navigateRouter(query);
     }
   },
 
-  onItemSearch(searchString) {
-    const $searchInput = this.getUI("searchInput");
-    $searchInput.val(searchString);
+  onItemSearch(query) {
+    const $searchInput = this.getUI('searchInput');
+    $searchInput.val(query);
+    this.navigateRouter(query);
+  },
+
+  onSearchIconClicked(_view, _event) {
+    const $searchInput = this.getUI('searchInput');
+    const query = $searchInput.val();
+    this.navigateRouter(query);
+  },
+
+  navigateRouter(query) {
+    this.options.router.navigate('item/query/' + encodeURIComponent(query), true);
   },
 });
 

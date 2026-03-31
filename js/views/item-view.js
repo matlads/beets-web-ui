@@ -1,38 +1,47 @@
-import Item from "../models/item.js";
-import { items } from "../collections/items.js";
+import BaseView from './base-view.js';
+import { template } from 'underscore';
 
-const beetsChannel = Backbone.Radio.channel("beets");
+import Item from '../models/item.js';
 
-const ItemView = Marionette.View.extend({
+import {
+  FileMusicIcon,
+  JournalAlbumIcon,
+  PersonIcon,
+  InfoSquareIcon,
+  PlayIcon,
+  PauseIcon,
+} from '../icons.js';
+
+const ItemView = BaseView.extend({
   options: {
-    playOrPause: "bi-play",
+    playOrPause: PlayIcon,
   },
   model: Item,
-  className: "card",
-  template: _.template(`
+  className: 'card',
+  template: template(`
 		<div class="card-body">
 			<div class="card-title">
-				<i class="bi bi-file-music"></i>
+        <img src="${FileMusicIcon}" />
 				<%- title %>
 			</div>
 			<div class="row">
 				<div class="col-8">
 					<p class="card-text">
-						<i class="bi bi-journal-album"></i>
-						<a href="#" id="album"><%- album %></a>
+            <img src="${JournalAlbumIcon}" />
+						<a href="/item/query/album:<%- album %>" id="album"><%- album %></a>
 					</p>
 					<p class="card-text">
-						<i class="bi bi-person"></i>
-						<a href="#" id="artist"><%- artist %></a>
+            <img src="${PersonIcon}" />
+						<a href="/item/query/artist:<%- artist %>" id="artist"><%- artist %></a>
 					</p>
 				</div>
 				<div class="col-4">
 					<div class="btn-group" role="group" aria-label="Basic example">
-						<button type="button" class="btn btn-primary">
-							<i class="bi bi-info-square"></i>
+						<button type="button" class="btn btn-primary info-square">
+              <img src="${InfoSquareIcon}"/>
 						</button>
-						<button type="button" class="btn btn-primary">
-							<i class="bi <%= playOrPause %>"></i>
+						<button id="playOrPause" type="button" class="btn btn-primary <%= playOrPauseClass %>">
+              <img src="<%= playOrPause %>" />
 						</button>
 					</div>
 				</div>
@@ -40,50 +49,52 @@ const ItemView = Marionette.View.extend({
 		</div>
 	`),
   events: {
-    "click .bi-info-square": "onClick",
-    "click .bi-play": "triggerPlay",
-    "click .bi-pause": "triggerPause",
-    "click #artist": "searchArtist",
-    "click #album": "searchAlbum",
+    'click .info-square': 'onClick',
+    'click .play': 'triggerPlay',
+    'click .pause': 'triggerPause',
+    'click #artist': 'searchArtist',
+    'click #album': 'searchAlbum',
+  },
+  ui: {
+    playOrPauseButton: '#playOrPause',
   },
   templateContext() {
     return {
       playOrPause: this.options.playOrPause,
+      playOrPauseClass: this.options.playOrPause === PauseIcon ? 'pause' : 'play',
     };
   },
   onClick() {
-    beetsChannel.trigger("item:selected", this.model);
+    this.beetsChannel.trigger('item:selected', this.model);
   },
   triggerPlay() {
-    this.options.playOrPause = "bi-pause";
-    this.$el.addClass("text-bg-success");
+    this.options.playOrPause = PauseIcon;
     this.render();
-    beetsChannel.trigger("item:play", this.model);
+    this.beetsChannel.trigger('item:play', this.model);
   },
   triggerPause() {
     this.resetView();
-    beetsChannel.trigger("item:pause", this.model);
+    this.beetsChannel.trigger('item:pause', this.model);
   },
   resetView() {
-    this.model.active = false;
-    this.options.playOrPause = "bi-play";
-    this.$el.removeClass("text-bg-success");
+    this.options.playOrPause = PlayIcon;
     this.render();
   },
-  setQuery(query = "") {
-    items.setQuery(query).fetch();
-    beetsChannel.trigger("item:search", query);
+  setQuery(query = '') {
+    this.beetsChannel.trigger('item:search', query);
   },
-  searchArtist() {
-    const artist = this.model.get("artist");
+  searchArtist(event) {
+    event.preventDefault();
+    const artist = this.model.get('artist');
     const query = `artist:${artist}`;
     this.setQuery(query);
   },
-  searchAlbum() {
-    const album = this.model.get("album");
+  searchAlbum(event) {
+    event.preventDefault();
+    const album = this.model.get('album');
     const query = `album:${album}`;
     this.setQuery(query);
-  }
+  },
 });
 
 export default ItemView;

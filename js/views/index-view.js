@@ -1,9 +1,12 @@
-import HeaderView from "./header-view.js";
-import FooterView from "./footer-view.js";
-import MainView from "./main-view.js";
+import { View } from 'backbone.marionette';
+import { template } from 'underscore';
 
-const IndexView = Marionette.View.extend({
-  template: _.template(`
+import HeaderView from './header-view.js';
+import FooterView from './footer-view.js';
+import MainView from './main-view.js';
+
+const IndexView = View.extend({
+  template: template(`
 		<nav id="header" class="navbar fixed-top bg-body-tertiary"></nav>
 		<main id="main" class="mh-100"></main>
 		<nav id="footer" class="navbar fixed-bottom bg-body-tertiary"></nav>
@@ -16,15 +19,15 @@ const IndexView = Marionette.View.extend({
   },
 
   regions: {
-    header: "#header",
-    main: "main",
-    footer: "#footer",
+    header: '#header',
+    main: 'main',
+    footer: '#footer',
   },
 
-  onRender(options) {
-    this.showChildView("header", this.headerView);
-    this.showChildView("main", this.mainView);
-    this.showChildView("footer", this.footerView);
+  onRender(_options) {
+    this.showChildView('header', this.headerView);
+    this.showChildView('main', this.mainView);
+    this.showChildView('footer', this.footerView);
   },
 });
 

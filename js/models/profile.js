@@ -1,6 +1,8 @@
-const ProfileModel = Backbone.Model.extend({
+import { Model } from 'backbone';
+
+const ProfileModel = Model.extend({
   defaults: {
-    name: "John Doe",
+    name: 'John Doe',
   },
 });
 

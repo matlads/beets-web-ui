@@ -1,19 +1,21 @@
-import ProfileView from "./profile-view.js";
-import ProfileModel from "../models/profile.js";
-import SearchView from "./search-view.js";
+import { View } from 'backbone.marionette';
+import { template } from 'underscore';
 
-const HeaderView = Marionette.View.extend({
-  template: _.template(`
+import ProfileView from './profile-view.js';
+import ProfileModel from '../models/profile.js';
+
+const HeaderView = View.extend({
+  template: template(`
 		<div>
-				<a class="navbar-brand" href="#">Beets</a>
+				<a class="navbar-brand">Beets</a>
 		</div>
     <div>
     </div>
 		<div id="profile">Profile</div>`),
-  className: "container text-center",
+  className: 'container text-center',
 
   regions: {
-    profileRegion: "#profile",
+    profileRegion: '#profile',
   },
 
   onRender() {
@@ -21,7 +23,7 @@ const HeaderView = Marionette.View.extend({
       name: this.options.user.name,
     });
     const profileView = new ProfileView({ model: profile });
-    this.showChildView("profileRegion", profileView);
+    this.showChildView('profileRegion', profileView);
   },
 });
 

@@ -1,28 +1,35 @@
-import ItemView from "./item-view.js";
-import { items } from "../collections/items.js";
+import { CollectionView } from 'backbone.marionette';
+import { Radio } from 'backbone';
 
-const LocalFilesView = Marionette.CollectionView.extend({
-  className: "border",
+import ItemView from './item-view.js';
+
+const LocalFilesView = CollectionView.extend({
+  className: 'border',
   childView: ItemView,
 
   initialize() {
-    this.currentItem = null;
+    if (CollectionView.prototype.initialize) {
+      CollectionView.prototype.initialize.apply(this, arguments);
+    }
 
-    this.beetsChannel = Backbone.Radio.channel("beets");
-    this.bindEvents(this.beetsChannel, this.beetsEvents);
+    this.currentItem = null;
+    this.beetsChannel = Radio.channel('beets');
+
+    if (this.beetsEvents) {
+      this.bindEvents(this.beetsChannel, this.beetsEvents);
+    }
   },
   beetsEvents: {
-    "item:play": "doPlay",
-    "play:ended": "playNext",
-    "play:pause": "doPause",
+    'item:play': 'doPlay',
+    'play:ended': 'playNext',
+    'play:pause': 'doPause',
   },
 
   onBeforeRender() {
-    this.collection = items;
+    this.collection = this.options.items;
   },
 
   doPlay(model) {
-    var that = this;
     this.currentItem = model;
     this.children.each(function (childView) {
       if (childView.model !== model) {
@@ -32,17 +39,23 @@ const LocalFilesView = Marionette.CollectionView.extend({
   },
 
   playNext() {
-    const bView = this.currentItem;
-    const idx = this.children.findIndexByView(bView);
-    if (idx == -1 || idx === undefined) {
-      // Not in current list.
-      return;
+    const bView = this.children.findByModel(this.currentItem);
+    if (bView) {
+      const idx = this.children.findIndexByView(bView);
+      if (idx == -1 || idx === undefined) {
+        // Not in current list.
+        return;
+      }
+      const nextIdx = idx + 1;
+      const nextChild = this.children.findByIndex(nextIdx);
+      if (nextChild) {
+        nextChild.triggerPlay();
+      }
     }
-    var nextIdx = idx + 1;
-    const nextChild = this.children.findByIndex(nextIdx);
-    if (nextChild) {
-      this.beetsChannel.trigger("item:play", nextChild.model.get("id"));
-    }
+  },
+
+  doPause() {
+    // Currently no action needed for pause in local files view
   },
 });
 

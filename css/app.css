@@ -1,3 +1,4 @@
+/* Layout */
 body {
   padding-top: 70px;
   padding-bottom: 70px;
@@ -12,15 +13,17 @@ body {
   overflow-y: auto;
 }
 
-.lyrics {
+/* SearchResultsView */
+.search-results-view__lyrics {
   white-space: pre;
 }
 
-.search-container {
+/* SearchView */
+.search-view__container {
   position: relative;
 }
 
-.search-input {
+.search-view__input {
   height: 50px;
   border-radius: 30px;
   padding-left: 35px;
@@ -28,7 +31,7 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.search-icon {
+.search-view__icon {
   position: absolute;
   top: 50%;
   left: 15px;

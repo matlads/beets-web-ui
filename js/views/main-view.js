@@ -1,11 +1,14 @@
-import LocalFilesView from "./local-files-view.js";
-import SearchResultsView from "./search-results-view.js";
-import QueueView from "./queue-view.js";
-import SearchView from "./search-view.js";
+import { View } from 'backbone.marionette';
+import { template } from 'underscore';
 
-const MainView = Marionette.View.extend({
-  className: "row",
-  template: _.template(`
+import LocalFilesView from './local-files-view.js';
+import SearchResultsView from './search-results-view.js';
+import QueueView from './queue-view.js';
+import SearchView from './search-view.js';
+
+const MainView = View.extend({
+  className: 'row',
+  template: template(`
 		<div class="col-3">
       <div id="search-area"></div>
       <div id="left-column"></div>
@@ -16,23 +19,23 @@ const MainView = Marionette.View.extend({
 
   initialize(options) {
     this.localFilesView = new LocalFilesView(options);
-    this.searchResultsView = new SearchResultsView();
-    this.queueView = new QueueView();
+    this.searchResultsView = new SearchResultsView(options);
+    this.queueView = new QueueView(options);
     this.searchView = new SearchView(options);
   },
 
   regions: {
-    searchRegion: "#search-area",
-    localFileRegion: "#left-column",
-    searchResultsRegion: "#center-column",
-    queueRegion: "#right-column",
+    searchRegion: '#search-area',
+    localFileRegion: '#left-column',
+    searchResultsRegion: '#center-column',
+    queueRegion: '#right-column',
   },
 
-  onRender(options) {
-    this.showChildView("searchRegion", this.searchView);
-    this.showChildView("localFileRegion", this.localFilesView);
-    this.showChildView("searchResultsRegion", this.searchResultsView);
-    this.showChildView("queueRegion", this.queueView);
+  onRender(_options) {
+    this.showChildView('searchRegion', this.searchView);
+    this.showChildView('localFileRegion', this.localFilesView);
+    this.showChildView('searchResultsRegion', this.searchResultsView);
+    this.showChildView('queueRegion', this.queueView);
   },
 });
 export default MainView;

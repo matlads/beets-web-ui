@@ -1,7 +1,10 @@
-import Item from "../models/item.js";
+import BaseView from './base-view.js';
+import { template } from 'underscore';
 
-const CurrentlyPlayingView = Marionette.View.extend({
-  template: _.template(`
+import Item from '../models/item.js';
+
+const CurrentlyPlayingView = BaseView.extend({
+  template: template(`
         <div class="card-body">
             <p class="card-text">
                 <small><%= title %></small>
@@ -9,14 +12,13 @@ const CurrentlyPlayingView = Marionette.View.extend({
             </p>
         </div>
     `),
-  className: "card",
+  className: 'card',
   initialize() {
-    this.beetsChannel = Backbone.Radio.channel("beets");
-    this.bindEvents(this.beetsChannel, this.beetsEvents);
+    BaseView.prototype.initialize.apply(this, arguments);
     this.model = new Item();
   },
   beetsEvents: {
-    "item:play": "doPlay",
+    'item:play': 'doPlay',
   },
   doPlay(model) {
     this.model = model;

@@ -1,43 +1,45 @@
-import Item from "../models/item.js";
+import BaseView from './base-view.js';
+import { template } from 'underscore';
 
-const PlayerView = Marionette.View.extend({
-  tagName: "audio",
+import Item from '../models/item.js';
+
+const PlayerView = BaseView.extend({
+  tagName: 'audio',
   attributes: {
     controls: true,
   },
-  template: _.template(`
+  template: template(`
         Your browser does not support the audio element.
     `),
   initialize() {
-    this.beetsChannel = Backbone.Radio.channel("beets");
-    this.bindEvents(this.beetsChannel, this.beetsEvents);
+    BaseView.prototype.initialize.apply(this, arguments);
     this.model = new Item();
   },
   events: {
-    ended: "onEnded",
+    ended: 'onEnded',
   },
   beetsEvents: {
-    "item:play": "doPlay",
-    "item:pause": "doPause",
+    'item:play': 'doPlay',
+    'item:pause': 'doPause',
   },
   doPlay(model) {
     this.model = model;
     this.play();
   },
-  doPause(itemId) {
+  doPause(_itemId) {
     this.el.pause();
   },
   play() {
-    const itemId = this.model.get("id");
+    const itemId = this.model.get('id');
     const dataUrl = this.options.settings.dataUrl;
     const url = `${dataUrl}/item/${itemId}/file`;
     this.el.src = url;
     this.el.play();
-    this.model.active = true;
+    // this.model.active = true;
   },
   onEnded() {
-    this.model.active = false;
-    this.beetsChannel.trigger("play:ended");
+    // this.model.active = false;
+    this.beetsChannel.trigger('play:ended');
   },
 });
 

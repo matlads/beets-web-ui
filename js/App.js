@@ -1,14 +1,20 @@
-import IndexView from "./views/index-view.js";
-import { items } from "./collections/items.js";
+import { Application } from 'backbone.marionette';
+import { history } from 'backbone';
+import IndexView from './views/index-view.js';
+import { ItemsCollection } from './collections/items.js';
+import { createRouter } from './routers/beets-router.js';
 
-const App = Marionette.Application.extend({
-  region: "#app",
+const App = Application.extend({
+  region: '#app',
 
   onBeforeStart(app, options) {
-    const beetsApi = options.settings.dataUrl;
+    const items = new ItemsCollection();
     items.baseUrl = options.settings.dataUrl;
-    items.setQuery().fetch();
-    items.fetch();
+
+    const router = createRouter(items);
+
+    options.items = items;
+    options.router = router;
   },
 
   onStart(app, options) {
@@ -16,7 +22,7 @@ const App = Marionette.Application.extend({
 
     this.showView(indexView);
 
-    Backbone.history.start();
+    history.start();
   },
 });
 
