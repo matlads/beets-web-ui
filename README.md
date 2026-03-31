@@ -4,6 +4,7 @@ A web interface for the [beets](https://github.com/beetbox/beets) music library 
 
 [![Test](https://github.com/matlads/beets-web-ui/actions/workflows/test.yml/badge.svg)](https://github.com/matlads/beets-web-ui/actions/workflows/test.yml)
 [![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)](https://github.com/matlads/beets-web-ui/actions)
+[![Deploy to GitHub Pages](https://github.com/matlads/beets-web-ui/actions/workflows/deploy.yml/badge.svg)](https://github.com/matlads/beets-web-ui/actions/workflows/deploy.yml)
 
 ## Features
 
