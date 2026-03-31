@@ -1,5 +1,6 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { items } from '../collections/items.js';
+import { mockSyncSuccess, mockSyncError, restoreSync } from './utils/sync.js';
 
 describe('ItemsCollection', () => {
   beforeEach(() => {
@@ -37,5 +38,83 @@ describe('ItemsCollection', () => {
 
     items.setQuery('album:test');
     expect(eventTriggered).toBe(true);
+  });
+
+  describe('fetch lifecycle', () => {
+    beforeEach(() => {
+      items.baseUrl = 'http://test.example.com';
+      items.setQuery('test');
+    });
+
+    afterEach(() => {
+      restoreSync();
+    });
+
+    it('should trigger items:fetch:start on fetch', () => {
+      let startTriggered = false;
+      items.on('items:fetch:start', () => {
+        startTriggered = true;
+      });
+
+      mockSyncSuccess([{ id: 1, title: 'Test' }]);
+      items.fetch();
+
+      expect(startTriggered).toBe(true);
+    });
+
+    it('should trigger items:fetch:success on successful fetch', () => {
+      let successTriggered = false;
+      items.on('items:fetch:success', () => {
+        successTriggered = true;
+      });
+
+      mockSyncSuccess([{ id: 1, title: 'Test' }]);
+      items.fetch();
+
+      expect(successTriggered).toBe(true);
+    });
+
+    it('should trigger items:fetch:error on failed fetch', () => {
+      let errorTriggered = false;
+      items.on('items:fetch:error', () => {
+        errorTriggered = true;
+      });
+
+      mockSyncError(new Error('Network error'));
+      items.fetch();
+
+      expect(errorTriggered).toBe(true);
+    });
+
+    it('should call original success callback', () => {
+      let originalSuccessCalled = false;
+      const success = () => {
+        originalSuccessCalled = true;
+      };
+
+      mockSyncSuccess([{ id: 1, title: 'Test' }]);
+      items.fetch({ success });
+
+      expect(originalSuccessCalled).toBe(true);
+    });
+
+    it('should call original error callback', () => {
+      let originalErrorCalled = false;
+      const error = () => {
+        originalErrorCalled = true;
+      };
+
+      mockSyncError(new Error('Network error'));
+      items.fetch({ error });
+
+      expect(originalErrorCalled).toBe(true);
+    });
+
+    it('should delegate to Backbone.Collection.fetch once', () => {
+      const spy = vi.spyOn(items, 'fetch').mockImplementation(() => {});
+      items.fetch();
+      expect(spy).toHaveBeenCalledTimes(1);
+      spy.mockRestore();
+    });
   });
 });

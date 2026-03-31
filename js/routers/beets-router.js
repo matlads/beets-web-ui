@@ -4,12 +4,12 @@ import { Radio } from 'backbone';
 const BeetsRouter = Router.extend({
   routes: {
     'item/query/:query': 'itemQuery',
-    'player': 'playerRoute',
-    'queue': 'queueRoute',
-    'profile': 'profileRoute',
+    player: 'playerRoute',
+    queue: 'queueRoute',
+    profile: 'profileRoute',
   },
 
-  initialize: function(options = {}) {
+  initialize: function (options = {}) {
     this.items = options.items;
     this.beetsChannel = Radio.channel('beets');
     Router.prototype.initialize.call(this, options);
@@ -20,15 +20,15 @@ const BeetsRouter = Router.extend({
     this.items.setQuery(queryURL).fetch();
   },
 
-  playerRoute: function() {
+  playerRoute: function () {
     this.beetsChannel.trigger('route:player');
   },
 
-  queueRoute: function() {
+  queueRoute: function () {
     this.beetsChannel.trigger('route:queue');
   },
 
-  profileRoute: function() {
+  profileRoute: function () {
     this.beetsChannel.trigger('route:profile');
   },
 });

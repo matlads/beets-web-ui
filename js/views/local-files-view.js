@@ -53,6 +53,10 @@ const LocalFilesView = CollectionView.extend({
       }
     }
   },
+
+  doPause() {
+    // Currently no action needed for pause in local files view
+  },
 });
 
 export default LocalFilesView;

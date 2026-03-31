@@ -40,7 +40,7 @@ const ItemView = BaseView.extend({
 						<button type="button" class="btn btn-primary info-square">
               <img src="${InfoSquareIcon}"/>
 						</button>
-						<button id="playOrPause" type="button" class="btn btn-primary play">
+						<button id="playOrPause" type="button" class="btn btn-primary <%= playOrPauseClass %>">
               <img src="<%= playOrPause %>" />
 						</button>
 					</div>
@@ -61,6 +61,7 @@ const ItemView = BaseView.extend({
   templateContext() {
     return {
       playOrPause: this.options.playOrPause,
+      playOrPauseClass: this.options.playOrPause === PauseIcon ? 'pause' : 'play',
     };
   },
   onClick() {
@@ -68,11 +69,6 @@ const ItemView = BaseView.extend({
   },
   triggerPlay() {
     this.options.playOrPause = PauseIcon;
-
-    const playOrPauseButton = this.getUI('playOrPauseButton');
-    playOrPauseButton.removeClass('pause');
-    playOrPauseButton.addClass('play');
-
     this.render();
     this.beetsChannel.trigger('item:play', this.model);
   },
@@ -82,11 +78,6 @@ const ItemView = BaseView.extend({
   },
   resetView() {
     this.options.playOrPause = PlayIcon;
-
-    const playOrPauseButton = this.getUI('playOrPauseButton');
-    playOrPauseButton.removeClass('play');
-    playOrPauseButton.addClass('pause');
-
     this.render();
   },
   setQuery(query = '') {

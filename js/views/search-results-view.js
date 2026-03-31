@@ -43,7 +43,7 @@ const SearchResultsView = BaseView.extend({
 
   fetchItemDetails() {
     const itemId = this.model.get('id');
-    const dataUrl = this.options.settings.dataUrl;
+    const dataUrl = this.options && this.options.settings && this.options.settings.dataUrl;
 
     if (!itemId || !dataUrl) {
       this.render();
@@ -57,7 +57,7 @@ const SearchResultsView = BaseView.extend({
       },
       error: () => {
         this.render();
-      }
+      },
     });
   },
 });
