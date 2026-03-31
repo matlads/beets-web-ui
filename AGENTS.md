@@ -13,7 +13,10 @@ beets-web-ui is a web interface for the beets music library manager, built with 
 npm run dev      # Start Vite development server
 npm run build    # Build for production
 npm run preview  # Preview production build locally
-npm test         # Placeholder - no tests configured
+npm test         # Run Vitest tests
+npm run test:coverage  # Run tests with coverage report
+npm run lint       # Run ESLint linting
+npm run format:check # Check Prettier formatting
 ```
 
 ### Environment Setup
@@ -26,8 +29,9 @@ npm test         # Placeholder - no tests configured
 ### Build Configuration
 - **Build Tool**: Vite (see `vite.config.js`)
 - **No TypeScript**: Plain JavaScript with ES6 modules
-- **No ESLint/Prettier**: No linting or formatting configuration
-- **No Testing Framework**: Tests not currently configured
+- **ESLint**: Configured with `eslint.config.js` (includes Vitest/jsdom globals)
+- **Prettier**: Configured with `.prettierrc`
+- **Testing Framework**: Vitest with jsdom environment, coverage via v8
 
 ## Code Style Guidelines
 
@@ -224,7 +228,7 @@ const BeetsRouter = Router.extend({
 2. **Code Changes**: Edit files in `js/` directory
 3. **Browser Testing**: App runs at `http://localhost:5173`
 4. **Production Build**: `npm run build` outputs to `dist/`
-5. **No Tests**: No test framework configured (placeholder `npm test`)
+5. **Testing**: Run `npm test` for Vitest tests, `npm run test:coverage` for coverage report, `npm run lint` for linting, `npm run format:check` for formatting
 
 ## Key Architectural Patterns
 
@@ -247,11 +251,11 @@ const BeetsRouter = Router.extend({
 
 ## Missing Tooling (Potential Improvements)
 
-- No ESLint configuration
-- No Prettier formatting
-- No testing framework
+- **ESLint**: Configured with `eslint.config.js`
+- **Prettier**: Configured with `.prettierrc`
+- **Testing Framework**: Vitest with jsdom environment and coverage
+- **CI/CD Pipeline**: GitHub Actions workflow for testing, linting, formatting, and coverage upload
 - No TypeScript support
-- No CI/CD pipeline
 - No Cursor rules (`.cursor/rules/`, `.cursorrules`)
 - No Copilot instructions (`.github/copilot-instructions.md`)
 
@@ -259,5 +263,5 @@ Agents should maintain the existing simple toolchain unless explicitly asked to 
 
 ---
 
-*Last updated: March 30, 2026*
+*Last updated: March 31, 2026*
 *Based on analysis of beets-web-ui repository*
