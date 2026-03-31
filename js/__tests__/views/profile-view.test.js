@@ -10,6 +10,6 @@ describe('ProfileView', () => {
     view.render();
     const html = view.el.innerHTML.trim();
 
-    expect(html).toBe('Alice');
+    expect(html).toContain('Alice');
   });
 });

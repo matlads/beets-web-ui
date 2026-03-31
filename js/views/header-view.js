@@ -3,11 +3,15 @@ import { template } from 'underscore';
 
 import ProfileView from './profile-view.js';
 import ProfileModel from '../models/profile.js';
+import { FileMusicIcon } from '../icons.js';
 
 const HeaderView = View.extend({
   template: template(`
 		<div>
-				<a class="navbar-brand">Beets</a>
+				<a class="navbar-brand">
+          <img src="${FileMusicIcon}" alt="Beets" style="height: 24px; margin-right: 8px;" />
+          Beets
+        </a>
 		</div>
     <div>
     </div>

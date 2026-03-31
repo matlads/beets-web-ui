@@ -23,9 +23,16 @@ describe('PlayerView', () => {
     restoreAudio();
   });
 
-  it('should render as audio element with controls', () => {
-    expect(view.el.tagName).toBe('AUDIO');
-    expect(view.el.hasAttribute('controls')).toBe(true);
+  it('should render as div container with custom controls', () => {
+    expect(view.el.tagName).toBe('DIV');
+    expect(view.el.classList.contains('player-container')).toBe(true);
+    const audioElement = view.el.querySelector('#audio-element');
+    expect(audioElement).toBeTruthy();
+    expect(audioElement.tagName).toBe('AUDIO');
+    expect(audioElement.style.display).toBe('none');
+    expect(view.el.querySelector('#play-pause-btn')).toBeTruthy();
+    expect(view.el.querySelector('#progress-bar')).toBeTruthy();
+    expect(view.el.querySelector('#volume-slider')).toBeTruthy();
   });
 
   it('should store model and call play on doPlay', () => {
@@ -43,7 +50,8 @@ describe('PlayerView', () => {
 
     view.play();
 
-    expect(view.el.src).toBe('http://test.example.com/item/456/file');
+    const audioElement = view.el.querySelector('#audio-element');
+    expect(audioElement.src).toBe('http://test.example.com/item/456/file');
     expect(HTMLMediaElement.prototype.play).toHaveBeenCalled();
   });
 

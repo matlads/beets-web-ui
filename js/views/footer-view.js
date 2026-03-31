@@ -7,8 +7,7 @@ import CurrentlyPlayingView from './currently-playing-view.js';
 const FooterView = View.extend({
   template: template(`
 		<div id="currently-playing"></div>
-		<div id="player" class="mx-auto"></div>
-		<div>Right</div>`),
+		<div id="player" class="mx-auto"></div>`),
   className: 'container-fluid',
   regions: {
     player: '#player',
